@@ -25,28 +25,46 @@ public class Main {
      * @param args the command line arguments
      */
     static boolean fileRead;
+    static boolean fileWrote;
+    static boolean fileAppended;
     
     public static void main(String[] args) {
-        File file = new File("C:\\Users\\Rajat\\Documents\\NetBeansProjects\\file-handling\\FileHandling\\test.txt");
-        String writeToFileText = "The shoes had been there for as long as anyone could remember.\nIn fact, it was difficult for anyone to come up with a date they had first appeared.\nIt had seemed they'd always been there and yet they seemed so out of place.\nWhy nobody had removed them was a question that had been asked time and again, but while they all thought it, nobody had ever found the energy to actually do it.\nSo, the shoes remained on the steps, out of place in one sense, but perfectly normal in another.";
+        File file = new File("test.txt");
+        String writeToFileText = "File has been written.";
+        String appendToFileText = "File has been appended.";
         
-        System.out.println("Reading File....\nFile contents:\n");
+        System.out.println("Writing to file....");
+        fileWrote = writeFile(file, "File to be read.");
+        if(fileWrote){System.out.println("Wrote to file successfully\n");}
+        else{System.out.println("Error while writing file.\n");}
+        
+        System.out.println("Reading File....\nFile contents:");
         fileRead = readFile(file);
-        if(fileRead){System.out.println("\nFile read successfully");}
-        else{System.out.println("\nError while reading file.");}
+        if(fileRead){System.out.println("\nFile read successfully\n");}
+        else{System.out.println("\nError while reading file.\n");}
         
-        System.out.println("\n\nWriting to file....\n");
-        boolean fileWrote = writeFile(file, writeToFileText);
-        if(fileWrote){System.out.println("\nWrote to file successfully");}
-        else{System.out.println("\nError while writing file.");}
+        System.out.println("Writing to file....");
+        fileWrote = writeFile(file, writeToFileText);
+        if(fileWrote){System.out.println("Wrote to file successfully\n");}
+        else{System.out.println("Error while writing file.\n");}
         
-        System.out.println("Reading File....\nFile contents:\n");
+        System.out.println("Reading File....\nFile contents:");
         fileRead = readFile(file);
-        if(fileRead){System.out.println("\nFile read successfully");}
-        else{System.out.println("\nError while reading file.");}
+        if(fileRead){System.out.println("\nFile read successfully\n");}
+        else{System.out.println("\nError while reading file.\n");}
+        
+        System.out.println("Appending File....");
+        fileRead = appendFile(file, appendToFileText);
+        if(fileRead){System.out.println("File appended successfully\n");}
+        else{System.out.println("Error while appending file.\n");}
+        
+        System.out.println("Reading File....\nFile contents:");
+        fileRead = readFile(file);
+        if(fileRead){System.out.println("\nFile read successfully\n");}
+        else{System.out.println("\nError while reading file.\n");}
         }
-
-    
+       
+        
     
     public static boolean readFile(File fileName){
         try{
@@ -64,6 +82,18 @@ public class Main {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
             writer.write(writeToFile);
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean appendFile(File fileName, String appendToFile){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            writer.append(" " + appendToFile);
             writer.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
