@@ -11,8 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
@@ -33,6 +31,7 @@ public class Main {
         String writeToFileText = "File has been written.";
         String appendToFileText = "File has been appended.";
         
+        //Initially write to file
         System.out.println("Writing to file....");
         fileWrote = writeFile(file, "File to be read.");
         if(fileWrote){System.out.println("Wrote to file successfully\n");}
@@ -43,6 +42,7 @@ public class Main {
         if(fileRead){System.out.println("\nFile read successfully\n");}
         else{System.out.println("\nError while reading file.\n");}
         
+        //Second write to file
         System.out.println("Writing to file....");
         fileWrote = writeFile(file, writeToFileText);
         if(fileWrote){System.out.println("Wrote to file successfully\n");}
@@ -53,6 +53,7 @@ public class Main {
         if(fileRead){System.out.println("\nFile read successfully\n");}
         else{System.out.println("\nError while reading file.\n");}
         
+        //Append to file
         System.out.println("Appending File....");
         fileRead = appendFile(file, appendToFileText);
         if(fileRead){System.out.println("File appended successfully\n");}
@@ -64,8 +65,7 @@ public class Main {
         else{System.out.println("\nError while reading file.\n");}
         }
        
-        
-    
+    //Method that will read and print content of file using streams
     public static boolean readFile(File fileName){
         try{
             Stream<String> stream = Files.lines(Paths.get(fileName.getPath()));
@@ -78,6 +78,7 @@ public class Main {
         return true;
     }
     
+    //Method that will write to file. Will erase previous contents of file
     public static boolean writeFile(File fileName, String writeToFile){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
@@ -90,6 +91,7 @@ public class Main {
         return true;
     }
     
+    //Method that will append to the end of the file
     public static boolean appendFile(File fileName, String appendToFile){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
